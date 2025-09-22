@@ -1,5 +1,3 @@
-// app/routes/auth.login.tsx
-
 import { supabase } from '../utils/supabase.server'
 import { createUserSession } from '../utils/session.server'
 
@@ -45,7 +43,7 @@ export async function action({ request }: { request: Request }) {
 export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-md w-full border border-gray-100">
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-md w-full max-h-full overflow-y-auto border border-gray-100">
         <div className="text-center">
           <div className="inline-block p-3 rounded-full bg-blue-600 text-white mb-4">
             <LogoIcon />
@@ -100,6 +98,15 @@ export default function Login() {
             </button>
           </div>
         </form>
+        <div className="mt-6 p-4 rounded-xl bg-slate-100 border border-slate-200 text-sm text-slate-700">
+          <p className="font-semibold mb-1">Temporary Test Credentials:</p>
+          <p>
+            <span className="font-medium">Email:</span> <code className="font-mono">biyibo1755@anysilo.com</code>
+          </p>
+          <p>
+            <span className="font-medium">Password:</span> <code className="font-mono">Pass@123</code>
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-// app/routes/auth.signup.tsx
 import { supabase } from '../utils/supabase.server'
 import { createUserSession } from '../utils/session.server'
 
@@ -44,7 +43,7 @@ export async function action({ request }: { request: Request }) {
 export default function Signup() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-md w-full border border-gray-100">
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-md w-full max-h-full overflow-y-auto border border-gray-100">
         <div className="text-center">
           <div className="inline-block p-3 rounded-full bg-blue-600 text-white mb-4">
             <LogoIcon />

@@ -39,6 +39,25 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
+// Utility function to format relative time
+const formatRelativeTime = (date: Date) => {
+  const now = new Date();
+  const diffInSeconds = Math.floor((now.getTime() - new Date(date).getTime()) / 1000);
+
+  const minutes = Math.floor(diffInSeconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(months / 12);
+
+  if (diffInSeconds < 60) return "less than a minute ago";
+  if (minutes < 60) return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
+  if (hours < 24) return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+  if (days < 30) return `${days} day${days === 1 ? "" : "s"} ago`;
+  if (months < 12) return `${months} month${months === 1 ? "" : "s"} ago`;
+  return `${years} year${years === 1 ? "" : "s"} ago`;
+};
+
 interface ArticlesListProps {
   articles: Article[];
 }
@@ -285,7 +304,7 @@ export default function ArticlesList({ articles }: ArticlesListProps) {
               paginatedArticles.map((article) => {
                 const dueStatus = getDueStatus(article.createdAt);
                 const categoryName = categoryLookup.get(article.id);
-                const lastUpdatedText = `Last Update: ${Math.floor(Math.random() * 12) + 1} months ago`; // Placeholder
+                const lastUpdatedText = formatRelativeTime(article.updatedAt);
 
                 return (
                   <tr key={article.id}>
@@ -298,14 +317,8 @@ export default function ArticlesList({ articles }: ArticlesListProps) {
                       <div className="text-sm text-gray-500">{dueStatus.date}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="w-16 h-1 bg-gray-200 rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full"
-                            style={{ width: `${(Math.random() * 100).toFixed(0)}%`, backgroundColor: `#${Math.floor(Math.random()*16777215).toString(16)}` }}
-                          />
-                        </div>
-                        <div className="ml-2 text-sm text-gray-500">{lastUpdatedText}</div>
+                      <div className="text-sm text-gray-500">
+                        Last Update: {lastUpdatedText}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

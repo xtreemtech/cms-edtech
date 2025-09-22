@@ -1,4 +1,3 @@
-// app/components/ArticleEditor.tsx
 import { useState, useEffect } from 'react';
 import { useNavigation, useFetcher, Link } from 'react-router';
 import type { Article } from '@prisma/client';
@@ -30,14 +29,22 @@ export default function ArticleEditor({ article, allArticles = [] }: ArticleEdit
     }
   }, [article]);
 
-  const generateSlug = (text: string) => {
+  const generateSlug = (text: string): string => {
     return text
       .toLowerCase()
+      .trim()
       .replace(/\s+/g, '-')
       .replace(/[^\w\-]+/g, '')
       .replace(/\-\-+/g, '-')
       .replace(/^-+/, '')
       .replace(/-+$/, '');
+  };
+
+  const formatTitleCase = (text: string): string => {
+    return text
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,15 +68,14 @@ export default function ArticleEditor({ article, allArticles = [] }: ArticleEdit
     setIsManualSlugEdit(false);
   };
 
-  const topLevelCategories = allArticles.filter(a => !a.parentId);
+  const topLevelCategories = allArticles.filter(a => !a.parentId && a.id !== article?.id);
 
   return (
-    <div className="p-6">
-      <fetcher.Form method="post" className="space-y-8">
+    <div className="p-4 md:p-8 lg:p-12 max-w-7xl mx-auto">
+      <fetcher.Form method="post" className="space-y-6 md:space-y-8">
         <input type="hidden" name="id" value={article?.id || ''} />
         <input type="hidden" name="content" value={content} />
         
-        {/* Title Field */}
         <div className="space-y-2">
           <label className="block text-sm font-semibold text-gray-700">Title</label>
           <input
@@ -83,9 +89,8 @@ export default function ArticleEditor({ article, allArticles = [] }: ArticleEdit
           />
         </div>
         
-        {/* Slug Field */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
             <label className="block text-sm font-semibold text-gray-700">Slug</label>
             {isManualSlugEdit && (
               <button
@@ -111,7 +116,6 @@ export default function ArticleEditor({ article, allArticles = [] }: ArticleEdit
           </p>
         </div>
         
-        {/* Parent Category Field */}
         <div className="space-y-2">
           <label className="block text-sm font-semibold text-gray-700">Parent Category</label>
           <select
@@ -123,7 +127,7 @@ export default function ArticleEditor({ article, allArticles = [] }: ArticleEdit
             <option value="">None (Top Level Category)</option>
             {topLevelCategories.map(category => (
               <option key={category.id} value={category.id}>
-                {category.title}
+                {formatTitleCase(category.title)}
               </option>
             ))}
           </select>
@@ -138,13 +142,13 @@ export default function ArticleEditor({ article, allArticles = [] }: ArticleEdit
           />
         </div>
         
-        <div className="flex space-x-4 pt-6 border-t border-gray-200">
+        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-6 border-t border-gray-200">
           <button
             type="submit"
             name="action"
             value={article ? "update" : "create"}
             disabled={isSubmitting}
-            className="inline-flex items-center justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
+            className="flex-grow inline-flex items-center justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
           >
             {isSubmitting ? "Saving..." : (article ? "Update Article" : "Create Article")}
           </button>
@@ -155,7 +159,7 @@ export default function ArticleEditor({ article, allArticles = [] }: ArticleEdit
               name="action"
               value="delete"
               disabled={isSubmitting}
-              className="inline-flex items-center justify-center py-3 px-6 border border-red-300 shadow-sm text-sm font-semibold rounded-xl text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 transition-colors"
+              className="flex-grow inline-flex items-center justify-center py-3 px-6 border border-red-300 shadow-sm text-sm font-semibold rounded-xl text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 transition-colors"
             >
               {isSubmitting ? "Deleting..." : "Delete Article"}
             </button>
@@ -163,7 +167,7 @@ export default function ArticleEditor({ article, allArticles = [] }: ArticleEdit
           
           <Link
             to="/articles"
-            className="inline-flex items-center justify-center py-3 px-6 border border-gray-300 shadow-sm text-sm font-semibold rounded-xl text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors"
+            className="flex-grow inline-flex items-center justify-center py-3 px-6 border border-gray-300 shadow-sm text-sm font-semibold rounded-xl text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors"
           >
             Cancel
           </Link>

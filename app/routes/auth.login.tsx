@@ -102,10 +102,10 @@ export default function Login() {
           <p className="font-semibold mb-1">Create New Account Or Use</p>
           <p className="font-semibold mb-1">Temporary Test Credentials:</p>
           <p>
-            <span className="font-medium">Email:</span> <code className="font-mono">biyibo1755@anysilo.com</code>
+            <span className="font-medium">Email:</span> <code className="font-mono">visitmrdaniel@gmail.com</code>
           </p>
           <p>
-            <span className="font-medium">Password:</span> <code className="font-mono">Pass@123</code>
+            <span className="font-medium">Password:</span> <code className="font-mono">Granite1</code>
           </p>
         </div>
       </div>

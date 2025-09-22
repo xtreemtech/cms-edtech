@@ -99,6 +99,7 @@ export default function Login() {
           </div>
         </form>
         <div className="mt-6 p-4 rounded-xl bg-slate-100 border border-slate-200 text-sm text-slate-700">
+          <p className="font-semibold mb-1">Create New Account Or Use</p>
           <p className="font-semibold mb-1">Temporary Test Credentials:</p>
           <p>
             <span className="font-medium">Email:</span> <code className="font-mono">biyibo1755@anysilo.com</code>

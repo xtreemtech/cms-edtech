@@ -1,0 +1,29 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Article {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String
+  // Tree structure
+  parentId  String?  @map("parentId")
+  parent    Article? @relation("ArticleTree", fields: [parentId], references: [id])
+  children  Article[] @relation("ArticleTree")
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Status (optional but shown in the mockup)
+  status    String?  @default("draft") // draft, active, etc.
+  
+  @@map("articles")
+}

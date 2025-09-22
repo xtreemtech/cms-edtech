@@ -1,0 +1,85 @@
+/* app/styles/index.css */
+@import "tailwindcss";
+
+
+.prose {
+  max-width: none;
+}
+
+.prose h1 {
+  @apply text-3xl font-bold mt-6 mb-4;
+}
+
+.prose h2 {
+  @apply text-2xl font-bold mt-5 mb-3;
+}
+
+.prose p {
+  @apply my-4;
+}
+
+.prose ul, .prose ol {
+  @apply my-4 pl-6;
+}
+
+.prose ul {
+  @apply list-disc;
+}
+
+.prose ol {
+  @apply list-decimal;
+}
+
+.prose li {
+  @apply my-1;
+}
+
+.prose a {
+  @apply text-blue-600 underline;
+}
+
+/* Tree View Styles */
+.tree-view {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.tree-node {
+  transition: all 0.2s ease;
+}
+
+.tree-node:hover {
+  background-color: #f8f9fa;
+}
+
+.tree-toggle {
+  transition: transform 0.2s ease;
+}
+
+.tree-toggle.expanded {
+  transform: rotate(90deg);
+}
+
+/* Table styles */
+.table-container {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Status badges */
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Hover effects */
+.table-row-hover:hover {
+  background-color: #f9fafb;
+}
+
+/* Pagination styles */
+.pagination-btn {
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover {
+  transform: translateY(-1px);
+}

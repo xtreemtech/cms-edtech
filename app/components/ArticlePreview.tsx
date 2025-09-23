@@ -1,4 +1,3 @@
-// app/components/ArticlePreview.tsx
 import type { Article } from '@prisma/client';
 
 interface ArticlePreviewProps {
